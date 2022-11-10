@@ -9,7 +9,6 @@
   "author": "Vikuu",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.1",
     "express": "^4.18.2",
     "uuid": "^9.0.0"
   }
