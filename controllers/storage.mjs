@@ -16,6 +16,11 @@ async function Storage (fileName) {
 		const fileContent = await readFile(fileName, { encoding: 'utf-8' });
 		return JSON.parse(fileContent);
 	}
+
+	return {
+		saveData,
+		getData,
+	};
 }
 
 export default Storage;
