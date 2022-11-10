@@ -4,12 +4,17 @@
   "description": "Questions with answers API",
   "main": "index.mjs",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "test": "ava"
+  },
   "keywords": [],
   "author": "Vikuu",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "ava": "^5.0.1"
   }
 }
