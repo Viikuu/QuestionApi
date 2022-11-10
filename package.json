@@ -1,0 +1,11 @@
+ {
+  "name": "question_api",
+  "version": "1.0.0",
+  "description": "Questions with answers API",
+  "main": "index.mjs",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "Vikuu",
+  "license": "ISC"
+}
