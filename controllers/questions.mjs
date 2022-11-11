@@ -4,8 +4,11 @@ async function questions(fileName) {
 	const storage = await Storage(fileName);
 
 	const getQuestions = async () => {
-		const questions = await storage.getData()
-		return questions
+		const questions = await storage.getData();
+		if (questions === undefined) {
+			return [];
+		}
+		return questions;
 	}
 
 	const getQuestionById = async questionId => {
