@@ -4,6 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 async function questions(fileName) {
 	const storage = await Storage(fileName);
 
+	const checkQuestion = (question) => {
+		if (typeof question !== 'object') {
+			throw new Error(`Question with specified id does not exist!`);
+		}
+		if (typeof question.author !== 'string' || typeof question.summary !== 'string' || !Array.isArray(question.answers)) {
+			throw new Error(`Question object damaged!`);
+		}
+	}
+
 	const getQuestions = async () => {
 		const questions = await storage.getData();
 		if (questions === undefined) {
