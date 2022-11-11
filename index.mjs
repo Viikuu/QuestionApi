@@ -13,9 +13,9 @@ app.use('/questions', questionRouter);
 
 
 app.get('/', (_, res) => {
-	res.json({ message: 'Welcome to responder!' })
+	res.json({ message: 'Welcome to responder!' });
 })
 
-app.listen(PORT, () => {
-	console.log(`Responder app listening on port ${PORT}`)
+app.listen(PORT, async () => {
+	console.log(`Responder app listening on port ${PORT}`);
 })
