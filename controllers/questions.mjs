@@ -12,9 +12,9 @@ async function questions(fileName) {
 	}
 
 	const getQuestionById = async questionId => {
-		const questions = await getQuestions()
+		const questions = await getQuestions();
 
-		return questions.find(question => question.id === questionId)
+		return questions.find(question => question.id === questionId);
 	}
 
 	const addQuestion = async question => {
