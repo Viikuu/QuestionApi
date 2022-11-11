@@ -1,11 +1,12 @@
 import { readFile, writeFile, access, mkdir } from 'fs/promises';
 
 async function Storage (fileName) {
-	fileName = `../data/${fileName}`;
+	fileName = `data/${fileName}`;
 	try {
 		await access(fileName);
 	} catch {
-		await mkdir(fileName);
+		await mkdir('data');
+		await saveData([]);
 	}
 
 	async function saveData(data) {
