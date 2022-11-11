@@ -49,36 +49,41 @@ async function questions(fileName) {
 	}
 
 	const getAnswers = async questionId => {
-		const question = await getQuestionById(questionId)
+		const question = await getQuestionById(questionId);
 
-		return question?.answers
+		checkQuestion(question);
+
+		return question.answers;
 	}
 
 	const getAnswer = async (questionId, answerId) => {
-		const answers = await getAnswers(questionId)
+		const answers = await getAnswers(questionId);
 
-		return answers === undefined ? undefined : answers.find(answer => answer.id === answerId)
+		return answers.find(answer => answer.id === answerId);
 	}
 
 	const addAnswer = async (questionId, answer) => {
-		const questions = await getQuestions()
-		const question = questions.find(question => question.id === questionId)
-		if (question === undefined) {
-			throw new Error('Question with specified id does not exist')
+		const questions = await getQuestions();
+		const question = questions.find(question => question.id === questionId);
+
+		checkQuestion(question);
+
+		if (typeof answer !== 'object') {
+			throw new Error(`Expected answer to be an object, got ${typeof answer}`);
 		}
 		if (typeof answer.author !== 'string') {
-			throw new Error(`Expected answer.author to be a string, got ${typeof answer.author}`)
+			throw new Error(`Expected answer.author to be a string, got ${typeof answer.author}`);
 		}
 		if (typeof answer.summary !== 'string') {
-			throw new Error(`Expected answer.summary to be a string, got ${typeof answer.summary}`)
+			throw new Error(`Expected answer.summary to be a string, got ${typeof answer.summary}`);
 		}
 
 		question.answers.push({
 				id: uuidv4(),
 				author: answer.author,
-				summary: answer.summary
+				summary: answer.summary,
 			}
-		)
+		);
 
 		await storage.saveData(questions);
 }
