@@ -18,20 +18,23 @@ async function questions(fileName) {
 	}
 
 	const addQuestion = async question => {
-		let questions = await getQuestions()
+		let questions = await getQuestions();
+		if (typeof question !== 'object') {
+			throw new Error(`Expected question to be an object, got ${typeof question}`);
+		}
 		if (typeof question.author !== 'string') {
-			throw new Error(`Expected question.author to be a string, got ${typeof question.author}`)
+			throw new Error(`Expected question.author to be a string, got ${typeof question.author}`);
 		}
 		if (typeof question.summary !== 'string') {
-			throw new Error(`Expected question.summary to be a string, got ${typeof question.summary}`)
+			throw new Error(`Expected question.summary to be a string, got ${typeof question.summary}`);
 		}
 
 		questions.push({
 			id: uuidv4(),
 			author: question.author,
 			summary: question.summary,
-			answers: []
-		})
+			answers: [],
+		});
 		await storage.saveData(questions);
 	}
 
