@@ -45,7 +45,7 @@ Project implementing API for creating questions and answers for them.
 ## Roadmap
 
 - [x] Create question controller
-- [ ] Create answer controller
+- [x] Create answer controller
 - [ ] Write unit tests for contollers
 - [ ] Create endpoints
 - [ ] Write tests for endpoints
