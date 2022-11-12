@@ -5,7 +5,14 @@ async function Storage (fileName) {
 	try {
 		await access(fileName);
 	} catch {
-		await mkdir('data');
+		try {
+			await mkdir('data');
+		} catch (e) {
+			if (e.code !== 'EEXIST') {
+				throw e;
+			}
+		}
+
 		await saveData([]);
 	}
 
