@@ -94,7 +94,7 @@ export default async function Questions(fileName) {
 		addQuestion,
 		getAnswers,
 		getAnswer,
-		addAnswer
+		addAnswer,
 	}
 
 }
