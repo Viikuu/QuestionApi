@@ -1,6 +1,6 @@
+import { access, unlink } from 'fs/promises';
 import test from 'ava';
 import Storage from '../controllers/storage.mjs';
-import { access, unlink } from 'fs/promises';
 import { faker } from '@faker-js/faker';
 
 test('Should throw error if fileName is not a json file name', async t => {
