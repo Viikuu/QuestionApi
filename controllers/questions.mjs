@@ -1,7 +1,7 @@
 import Storage from './storage.mjs';
 import { v4 as uuidv4 } from 'uuid';
 
-export async function questions(fileName) {
+export default async function Questions(fileName) {
 	const storage = await Storage(fileName);
 
 	const checkQuestion = (question) => {
