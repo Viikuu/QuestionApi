@@ -22,8 +22,7 @@ test('Should create data/filename if data/filename does not exist', async t => {
 
 test('Should return empty array when data/filename did not exist before Storage initialization', async t => {
 	const filename = `${faker.word.interjection()}.json`;
-	const data = await (await Storage(filename)).getData();
-	t.deepEqual(data, []);
+	t.deepEqual(await (await Storage(filename)).getData(), []);
 	await unlink(`data/${filename}`);
 });
 
