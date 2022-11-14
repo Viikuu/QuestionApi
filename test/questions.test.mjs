@@ -7,7 +7,7 @@ test.beforeEach(async () => {
 	await writeFile('data/test.json', JSON.stringify([], undefined, '  '), { encoding: 'utf-8' });
 })
 
-test.afterEach(async () => {
+test.after(async () => {
 	await unlink('data/test.json');
 })
 
