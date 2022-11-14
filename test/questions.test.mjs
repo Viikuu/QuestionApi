@@ -78,3 +78,21 @@ test.serial('Should return question with specified id ', async t => {
 	t.deepEqual(await (await Questions('test.json')).getQuestionById('e6455abf-22f9-4a9a-a942-b0fe9d848116'), testQuestions[0]);
 	t.deepEqual(await (await Questions('test.json')).getQuestionById('35c05570-622e-4008-a389-3694873e667a'), testQuestions[1]);
 });
+
+test.serial('Should throw error if added question is not typeof object ', async t => {
+	let question = "123";
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).addQuestion(question);
+	}, {instanceOf:Error, message: `Expected question to be an object, got ${typeof question}`});
+
+	question = 123;
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).addQuestion(question);
+	}, {instanceOf:Error, message: `Expected question to be an object, got ${typeof question}`});
+
+	question = [];
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).addQuestion(question);
+	}, {instanceOf:Error, message: `Expected question to be an object, got ${typeof question}`});
+
+});
