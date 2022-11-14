@@ -29,7 +29,7 @@ export default async function Questions(fileName) {
 
 	const addQuestion = async question => {
 		let questions = await getQuestions();
-		if (typeof question !== 'object') {
+		if (typeof question !== 'object' || Array.isArray(question)) {
 			throw new Error(`Expected question to be an object, got ${typeof question}`);
 		}
 		if (typeof question.author !== 'string') {
