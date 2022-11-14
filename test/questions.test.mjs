@@ -96,3 +96,44 @@ test.serial('Should throw error if added question is not typeof object ', async 
 	}, {instanceOf:Error, message: `Expected question to be an object, got ${typeof question}`});
 
 });
+
+test.serial('Should throw error if added question.author is not typeof string ', async t => {
+	let question = {
+		id: 'e6455abf-22f9-4a9a-a942-b0fe9d848116',
+		summary: 'What is my name?',
+		author: {name:'Jack London'},
+		answers: [],
+	};
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).addQuestion(question);
+	}, {instanceOf:Error, message: `Expected question.author to be a string, got ${typeof question.author}`});
+
+	question = {
+		id: 'e6455abf-22f9-4a9a-a942-b0fe9d848116',
+		summary: 'What is my name?',
+		author: 123,
+		answers: [],
+	};
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).addQuestion(question);
+	}, {instanceOf:Error, message: `Expected question.author to be a string, got ${typeof question.author}`});
+
+	question = {
+		id: 'e6455abf-22f9-4a9a-a942-b0fe9d848116',
+		summary: 'What is my name?',
+		answers: [],
+	};
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).addQuestion(question);
+	}, {instanceOf:Error, message: `Expected question.author to be a string, got ${typeof question.author}`});
+
+	question = {
+		id: 'e6455abf-22f9-4a9a-a942-b0fe9d848116',
+		summary: 'What is my name?',
+		author: [],
+		answers: [],
+	};
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).addQuestion(question);
+	}, {instanceOf:Error, message: `Expected question.author to be a string, got ${typeof question.author}`});
+});
