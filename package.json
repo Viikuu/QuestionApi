@@ -16,6 +16,16 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.1.0",
-    "ava": "^5.0.1"
+    "ava": "^5.0.1",
+    "xo": "^0.51.0"
+  },
+  "xo": {
+    "rules": {
+      "new-cap": "off",
+      "no-negated-condition": "off",
+      "unicorn/numeric-separators-style": "off",
+      "dot-notation": "off",
+      "unicorn/no-await-expression-member": "off"
+    }
   }
 }
