@@ -57,3 +57,24 @@ test.serial('Should return undefined when question with specified id does not ex
 
 	t.deepEqual(await (await Questions('test.json')).getQuestionById(faker.datatype.uuid()), undefined);
 });
+
+test.serial('Should return question with specified id ', async t => {
+	const testQuestions = [
+		{
+			id: 'e6455abf-22f9-4a9a-a942-b0fe9d848116',
+			summary: 'What is my name?',
+			author: 'Jack London',
+			answers: []
+		},
+		{
+			id: '35c05570-622e-4008-a389-3694873e667a',
+			summary: 'Who are you?',
+			author: 'Tim Doods',
+			answers: []
+		}
+	];
+	await writeFile('data/test.json', JSON.stringify(testQuestions, undefined, '  '), { encoding: 'utf-8' });
+
+	t.deepEqual(await (await Questions('test.json')).getQuestionById('e6455abf-22f9-4a9a-a942-b0fe9d848116'), testQuestions[0]);
+	t.deepEqual(await (await Questions('test.json')).getQuestionById('35c05570-622e-4008-a389-3694873e667a'), testQuestions[1]);
+});
