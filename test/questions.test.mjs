@@ -177,3 +177,40 @@ test.serial('Should throw error if added question.summary is not typeof string '
 		await (await Questions('test.json')).addQuestion(question);
 	}, {instanceOf: Error, message: `Expected question.summary to be a string, got ${typeof question.summary}`});
 });
+
+test.serial('Should add question to data/test.json', async t => {
+	const questions = await Questions('test.json');
+	let question = {
+		summary: 'What is moon?',
+		author: 'Jack London Third',
+	};
+
+	await t.notThrowsAsync(async () => {
+		await questions.addQuestion(question);
+	});
+
+	t.deepEqual((await questions.getQuestions())[0].author, question.author);
+	t.deepEqual((await questions.getQuestions())[0].summary, question.summary);
+
+	const testQuestions = [
+		{
+			id: 'e6455abf-22f9-4a9a-a942-b0fe9d848116',
+			summary: 'What is my name?',
+			author: 'Jack London',
+			answers: [],
+		},
+		{
+			id: '35c05570-622e-4008-a389-3694873e667a',
+			summary: 'Who are you?',
+			author: 'Tim Doods',
+			answers: [],
+		},
+	];
+	await writeFile('data/test.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
+
+	await t.notThrowsAsync(async () => {
+		await questions.addQuestion(question);
+	});
+
+	t.deepEqual((await questions.getQuestions()).length, testQuestions.length + 1);
+});
