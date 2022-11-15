@@ -2,6 +2,8 @@ import { access, unlink } from 'fs/promises';
 import test from 'ava';
 import Storage from '../controllers/storage.mjs';
 import { faker } from '@faker-js/faker';
+import Questions from '../controllers/questions.mjs';
+import {writeFile} from 'node:fs/promises';
 
 test('Should throw error if fileName is not a json file name', async t => {
 	await t.throwsAsync(async () => {
@@ -35,3 +37,30 @@ test('Should save object in data/filename and return exact same object', async t
 	await unlink(`data/${filename}`);
 });
 
+test.serial('Should throw an error when question is not typeof object or question with specified id does not exist', async t => {
+	const questions = await Questions('test2.json');
+	await t.throwsAsync(async () => {
+		await questions.getAnswers(faker.datatype.uuid());
+	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
+
+	let question = [];
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await t.throwsAsync(async () => {
+		await questions.getAnswers((await questions.getQuestions())[0].id);
+	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
+
+
+	question = 123;
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await t.throwsAsync(async () => {
+		await questions.getAnswers((await questions.getQuestions())[0].id);
+	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
+
+
+	question = 'string';
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await t.throwsAsync(async () => {
+		await questions.getAnswers((await questions.getQuestions())[0].id);
+	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
+
+});
