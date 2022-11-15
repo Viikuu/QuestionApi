@@ -5,7 +5,7 @@ export default async function Questions(fileName) {
 	const storage = await Storage(fileName);
 
 	const checkQuestion = (question) => {
-		if (typeof question !== 'object') {
+		if (typeof question !== 'object' || Array.isArray(question)) {
 			throw new Error(`Question with specified id does not exist!`);
 		}
 		if (typeof question.author !== 'string' || typeof question.summary !== 'string' || !Array.isArray(question.answers)) {
