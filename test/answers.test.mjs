@@ -106,3 +106,30 @@ test.serial('Should throw an error when question object is damaged', async t => 
 	}, {instanceOf: Error, message: `Question object damaged!`});
 
 });
+
+test.serial('Should return array of answers', async t => {
+	const questions = await Questions('test2.json');
+	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
+	let question = {
+		id,
+		author: "123",
+		summary: 'What is',
+		answers: [
+			{
+				'id': '54362748-22f9-4a9a-a942-b0fe9d848116',
+				'author': 'Brian McKenzie',
+				'summary': 'The Earth is flat.',
+			},
+			{
+				'id': '74927535-22f9-4a9a-a942-b0fe9d848116',
+				'author': 'Dr Strange',
+				'summary': 'It is egg-shaped.',
+			},
+		],
+	};
+
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+
+	t.deepEqual(await questions.getAnswers(id), question.answers);
+
+});
