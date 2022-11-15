@@ -133,3 +133,35 @@ test.serial('Should return array of answers', async t => {
 	t.deepEqual(await questions.getAnswers(id), question.answers);
 
 });
+
+test.serial('Should return single answer with specified id', async t => {
+	const questions = await Questions('test2.json');
+	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
+	const id2 = '54362748-22f9-4a9a-a942-b0fe9d848116'
+	let question = {
+		id,
+		author: "123",
+		summary: 'What is',
+		answers: [
+			{
+				'id': id2,
+				'author': 'Brian McKenzie',
+				'summary': 'The Earth is flat.',
+			},
+			{
+				'id': '74927535-22f9-4a9a-a942-b0fe9d848116',
+				'author': 'Dr Strange',
+				'summary': 'It is egg-shaped.',
+			},
+		],
+	};
+
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+
+	t.deepEqual(await questions.getAnswer(id, id2),
+		{
+			'id': id2,
+			'author': 'Brian McKenzie',
+			'summary': 'The Earth is flat.',
+		});
+});
