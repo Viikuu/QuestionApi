@@ -137,7 +137,7 @@ test.serial('Should return array of answers', async t => {
 test.serial('Should return single answer with specified id', async t => {
 	const questions = await Questions('test2.json');
 	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
-	const id2 = '54362748-22f9-4a9a-a942-b0fe9d848116'
+	const id2 = '54362748-22f9-4a9a-a942-b0fe9d848116';
 	let question = {
 		id,
 		author: "123",
@@ -164,4 +164,31 @@ test.serial('Should return single answer with specified id', async t => {
 			'author': 'Brian McKenzie',
 			'summary': 'The Earth is flat.',
 		});
+});
+
+
+test.serial('Should return undefined when answer with specified id does not exist', async t => {
+	const questions = await Questions('test2.json');
+	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
+	let question = {
+		id,
+		author: "123",
+		summary: 'What is',
+		answers: [
+			{
+				'id': faker.datatype.uuid(),
+				'author': 'Brian McKenzie',
+				'summary': 'The Earth is flat.',
+			},
+			{
+				'id': faker.datatype.uuid(),
+				'author': 'Dr Strange',
+				'summary': 'It is egg-shaped.',
+			},
+		],
+	};
+
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+
+	t.is(await questions.getAnswer(id, faker.datatype.uuid()), undefined);
 });
