@@ -306,3 +306,52 @@ test.serial('Should throw error if added answer.summary is not typeof string ', 
 		await questions.addAnswer(id, answer);
 	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
 });
+
+test.serial('Should add answer to data/test2.json', async t => {
+	const questions = await Questions('test2.json');
+	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
+	let question = {
+		id,
+		author: "123",
+		summary: 'What is',
+		answers: [],
+	};
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+
+	let answer = {
+		author: 'Joe',
+		summary: 'It is good',
+	};
+
+	await t.notThrowsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	});
+
+	t.deepEqual((await questions.getAnswers(id))[0].author, answer.author);
+	t.deepEqual((await questions.getAnswers(id))[0].summary, answer.summary);
+
+	question = {
+		id,
+		author: "123",
+		summary: 'What is',
+		answers: [
+			{
+				'id': '54362748-22f9-4a9a-a942-b0fe9d848116',
+				'author': 'Brian McKenzie',
+				'summary': 'The Earth is flat.',
+			},
+			{
+				'id': '74927535-22f9-4a9a-a942-b0fe9d848116',
+				'author': 'Dr Strange',
+				'summary': 'It is egg-shaped.',
+			},
+		],
+	};
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+
+	await t.notThrowsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	});
+
+	t.deepEqual((await questions.getAnswers(id)).length, question.answers.length + 1);
+});
