@@ -1,12 +1,12 @@
-import { access, unlink } from 'fs/promises';
+import {access, unlink} from 'node:fs/promises';
 import test from 'ava';
+import {faker} from '@faker-js/faker';
 import Storage from '../controllers/storage.mjs';
-import { faker } from '@faker-js/faker';
 
 test('Should throw error if fileName is not a json file name', async t => {
 	await t.throwsAsync(async () => {
 		await Storage('123');
-	}, {instanceOf:Error, message: 'Specified file should be a JSON file'});
+	}, {instanceOf: Error, message: 'Specified file should be a JSON file'});
 });
 
 test('Should create data/filename if data/filename does not exist', async t => {
@@ -16,7 +16,6 @@ test('Should create data/filename if data/filename does not exist', async t => {
 		await access(`data/${filename}`).then(async () => {
 			await unlink(`data/${filename}`);
 		});
-
 	});
 });
 
