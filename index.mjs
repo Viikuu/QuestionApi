@@ -1,6 +1,6 @@
 import express from 'express';
 import {questionRouter} from './routers/questionRouter.mjs';
-import questionStorage from './middleware/storageMiddleware.mjs';
+import questionStorage from './middleware/storage-middleware.mjs';
 
 const STORAGE_FILE_PATH = 'questions.json';
 const PORT = 3000;
