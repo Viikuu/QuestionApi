@@ -68,7 +68,7 @@ export default async function Questions(fileName) {
 
 		checkQuestion(question);
 
-		if (typeof answer !== 'object') {
+		if (typeof answer !== 'object' || Array.isArray(answer)) {
 			throw new Error(`Expected answer to be an object, got ${typeof answer}`);
 		}
 		if (typeof answer.author !== 'string') {
