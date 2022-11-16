@@ -268,3 +268,47 @@ test.serial('Should throw error if added answer.author is not typeof string ', a
 		await questions.addAnswer(id, answer);
 	}, {instanceOf: Error, message: `Expected answer.author to be a string, got ${typeof answer.author}`});
 });
+
+test.serial('Should throw error if added answer.summary is not typeof string ', async t => {
+	const questions = await Questions('test2.json');
+	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
+	let question = {
+		id,
+		author: "123",
+		summary: 'What is',
+		answers: [],
+	};
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+
+	let answer = {
+		author: 'Joe',
+	};
+
+	await t.throwsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
+
+	answer = {
+		author: 'Joe',
+		summary: {summary: 'What is'},
+	};
+	await t.throwsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
+
+	answer = {
+		author: 'Joe',
+		summary: ['What is'],
+	};
+	await t.throwsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
+
+	answer = {
+		author: 'Joe',
+		summary: 123,
+	};
+	await t.throwsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
+});
