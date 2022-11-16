@@ -192,3 +192,35 @@ test.serial('Should return undefined when answer with specified id does not exis
 
 	t.is(await questions.getAnswer(id, faker.datatype.uuid()), undefined);
 });
+
+test.serial('Should throw an error when answer is not typeof object or question with specified id does not exist', async t => {
+	const questions = await Questions('test2.json');
+	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
+	let question = {
+		id,
+		author: "123",
+		summary: 'What is',
+		answers: [],
+	};
+
+	let answer = []
+	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await t.throwsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
+
+	answer = 123;
+	await t.throwsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
+
+	answer = "string";
+	await t.throwsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
+
+	await t.throwsAsync(async () => {
+		await questions.addAnswer(id, answer);
+	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
+
+});
