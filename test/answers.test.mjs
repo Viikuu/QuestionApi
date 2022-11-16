@@ -20,7 +20,6 @@ test.serial('Should return empty array when no answers are added', async t => {
 	await questions.addQuestion(question);
 
 	t.deepEqual(await questions.getAnswers((await questions.getQuestions())[0].id), []);
-
 });
 
 test.serial('Should throw an error when question is not typeof object or question with specified id does not exist', async t => {
@@ -46,7 +45,6 @@ test.serial('Should throw an error when question is not typeof object or questio
 	await t.throwsAsync(async () => {
 		await questions.getAnswers((await questions.getQuestions())[0].id);
 	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
-
 });
 
 test.serial('Should throw an error when question object is damaged', async t => {
@@ -104,7 +102,6 @@ test.serial('Should throw an error when question object is damaged', async t => 
 	await t.throwsAsync(async () => {
 		await questions.getAnswers(id);
 	}, {instanceOf: Error, message: `Question object damaged!`});
-
 });
 
 test.serial('Should return array of answers', async t => {
@@ -131,7 +128,6 @@ test.serial('Should return array of answers', async t => {
 	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
 
 	t.deepEqual(await questions.getAnswers(id), question.answers);
-
 });
 
 test.serial('Should return single answer with specified id', async t => {
@@ -165,7 +161,6 @@ test.serial('Should return single answer with specified id', async t => {
 			'summary': 'The Earth is flat.',
 		});
 });
-
 
 test.serial('Should return undefined when answer with specified id does not exist', async t => {
 	const questions = await Questions('test2.json');
@@ -222,7 +217,6 @@ test.serial('Should throw an error when answer is not typeof object or question 
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
 	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
-
 });
 
 test.serial('Should throw error if added answer.author is not typeof string ', async t => {
