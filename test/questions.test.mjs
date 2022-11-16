@@ -180,7 +180,7 @@ test.serial('Should throw error if added question.summary is not typeof string '
 
 test.serial('Should add question to data/test.json', async t => {
 	const questions = await Questions('test.json');
-	let question = {
+	const question = {
 		summary: 'What is moon?',
 		author: 'Jack London Third',
 	};
