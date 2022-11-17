@@ -8,8 +8,14 @@ app.get('/', async (request, response) => {
 	response.json({success: true, questions});
 })
 
-app.get('/:questionId', async (req, res) => {
-
+app.get('/:questionId', async (request, response) => {
+	const {questionId} = request.params;
+	const question = await request.questionsRepo.getQuestionById(questionId);
+	if(question === undefined) {
+		response.code(404).json({ success: false, error: {message: `Question with specified Id doesn't exist`}});
+		return;
+	}
+	response.json({success: true, question});
 })
 
 app.post('/', async (req, res) => {
