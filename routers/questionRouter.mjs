@@ -3,8 +3,9 @@ import {answerRouter} from './answerRouter.mjs';
 
 const app = express.Router();
 
-app.get('/', async (req, res) => {
-
+app.get('/', async (request, response) => {
+	const questions = await request.questionsRepo.getQuestions();
+	response.json({success: true, questions});
 })
 
 app.get('/:questionId', async (req, res) => {
