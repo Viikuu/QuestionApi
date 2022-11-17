@@ -18,8 +18,10 @@ app.get('/:questionId', async (request, response) => {
 	response.json({success: true, question});
 })
 
-app.post('/', async (req, res) => {
-
+app.post('/', async (request, response) => {
+	const question = request.body
+	await request.questionsRepo.addQuestion(question)
+	response.json({success: true, question})
 })
 
 app.use(answerRouter);
