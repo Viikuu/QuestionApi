@@ -23,4 +23,4 @@ export function app_init(STORAGE_FILE_PATH) {
 	});
 
 	return app;
-}
+};
