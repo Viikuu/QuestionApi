@@ -6,7 +6,7 @@ export default async function Questions(fileName) {
 
 	const checkQuestion = (question) => {
 		if (typeof question !== 'object' || Array.isArray(question)) {
-			throw new Error(`Question with specified id does not exist!`);
+			throw new Error(`Question with specified id does not exist`);
 		}
 		if (typeof question.author !== 'string' || typeof question.summary !== 'string' || !Array.isArray(question.answers)) {
 			throw new Error(`Question object damaged!`);
@@ -25,7 +25,7 @@ export default async function Questions(fileName) {
 		const questions = await getQuestions();
 		const question = questions.find(question => question.id === questionId);
 		if (question === undefined) {
-			throw new Error('Question with specified Id does not exist');
+			throw new Error('Question with specified id does not exist');
 		}
 		return question;
 	}
