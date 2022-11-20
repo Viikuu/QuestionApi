@@ -61,8 +61,11 @@ export default async function Questions(fileName) {
 
 	const getAnswer = async (questionId, answerId) => {
 		const answers = await getAnswers(questionId);
-
-		return answers.find(answer => answer.id === answerId);
+		const answer = answers.find(answer => answer.id === answerId);
+		if (answer === undefined) {
+			throw new Error('Answer with specified id does not exist');
+		}
+		return answer;
 	}
 
 	const addAnswer = async (questionId, answer) => {
