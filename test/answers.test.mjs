@@ -26,25 +26,25 @@ test.serial('Should throw an error when question is not typeof object or questio
 	const questions = await Questions('test2.json');
 	await t.throwsAsync(async () => {
 		await questions.getAnswers(faker.datatype.uuid());
-	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
+	}, {instanceOf: Error, message: `Question with specified id does not exist`});
 
 	let question = [];
 	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers((await questions.getQuestions())[0].id);
-	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
+	}, {instanceOf: Error, message: `Question with specified id does not exist`});
 
 	question = 123;
 	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers((await questions.getQuestions())[0].id);
-	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
+	}, {instanceOf: Error, message: `Question with specified id does not exist`});
 
 	question = 'string';
 	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers((await questions.getQuestions())[0].id);
-	}, {instanceOf: Error, message: `Question with specified id does not exist!`});
+	}, {instanceOf: Error, message: `Question with specified id does not exist`});
 });
 
 test.serial('Should throw an error when question object is damaged', async t => {
