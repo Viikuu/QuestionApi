@@ -12,8 +12,15 @@ app.get('/:questionId/answers', async (request, response, next) => {
 	}
 })
 
-app.post('/:questionId/answers',async (req, res) => {
-
+app.post('/:questionId/answers',async (request, response, next) => {
+	const { questionId } = request.params;
+	const answer = request.body;
+	try{
+		await request.questionsRepo.addAnswer(questionId, answer);
+		response.json({ success: true, answer });
+	} catch (error) {
+		next(error);
+	}
 })
 
 app.get('/:questionId/answers/:answerId', async (req, res) => {
