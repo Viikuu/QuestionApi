@@ -23,8 +23,11 @@ export default async function Questions(fileName) {
 
 	const getQuestionById = async questionId => {
 		const questions = await getQuestions();
-
-		return questions.find(question => question.id === questionId);
+		const question = questions.find(question => question.id === questionId);
+		if (question === undefined) {
+			throw new Error('Question with specified Id does not exist');
+		}
+		return question;
 	}
 
 	const addQuestion = async question => {
