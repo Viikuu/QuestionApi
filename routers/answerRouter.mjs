@@ -23,8 +23,14 @@ app.post('/:questionId/answers',async (request, response, next) => {
 	}
 })
 
-app.get('/:questionId/answers/:answerId', async (req, res) => {
-
+app.get('/:questionId/answers/:answerId', async (request, response,next) => {
+	const { questionId, answerId } = request.params;
+	try{
+		const answer = await request.questionsRepo.getAnswer(questionId, answerId);
+		response.json({ success: true, answer });
+	} catch (error) {
+		next(error);
+	}
 })
 
 export {
