@@ -162,7 +162,7 @@ test.serial('Should return single answer with specified id', async t => {
 		});
 });
 
-test.serial('Should return undefined when answer with specified id does not exist', async t => {
+test.serial('Should throw error when answer with specified id does not exist', async t => {
 	const questions = await Questions('test2.json');
 	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
 	let question = {
@@ -185,7 +185,9 @@ test.serial('Should return undefined when answer with specified id does not exis
 
 	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
 
-	t.is(await questions.getAnswer(id, faker.datatype.uuid()), undefined);
+	await t.throwsAsync(async () => {
+		await questions.getAnswer(id, faker.datatype.uuid())
+	}, {instanceOf: Error, message: 'Answer with specified id does not exist'});
 });
 
 test.serial('Should throw an error when answer is not typeof object or question with specified id does not exist', async t => {
