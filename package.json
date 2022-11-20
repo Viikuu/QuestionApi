@@ -25,7 +25,8 @@
       "no-negated-condition": "off",
       "unicorn/numeric-separators-style": "off",
       "dot-notation": "off",
-      "unicorn/no-await-expression-member": "off"
+      "unicorn/no-await-expression-member": "off",
+      "quotes": "off"
     }
   }
 }
