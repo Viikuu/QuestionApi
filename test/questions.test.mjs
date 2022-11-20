@@ -35,7 +35,7 @@ test.serial('Should return list of questions which are in a test.json file', asy
 	t.deepEqual(await (await Questions('test.json')).getQuestions(), testQuestions);
 });
 
-test.serial('Should return undefined when question with specified id does not exist', async t => {
+test.serial('Should throw error when question with specified id does not exist', async t => {
 	const testQuestions = [
 		{
 			id: faker.datatype.uuid(),
@@ -51,11 +51,15 @@ test.serial('Should return undefined when question with specified id does not ex
 		},
 	];
 
-	t.is(await (await Questions('test.json')).getQuestionById(faker.datatype.uuid()), undefined);
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).getQuestionById(faker.datatype.uuid());
+	}, {instanceOf: Error, message: 'Question with specified id does not exist'});
 
 	await writeFile('data/test.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
 
-	t.is(await (await Questions('test.json')).getQuestionById(faker.datatype.uuid()), undefined);
+	await t.throwsAsync(async () => {
+		await (await Questions('test.json')).getQuestionById(faker.datatype.uuid());
+	}, {instanceOf: Error, message: 'Question with specified id does not exist'});
 });
 
 test.serial('Should return question with specified id ', async t => {
