@@ -13,7 +13,7 @@ test.beforeEach(async () => {
 
 test.serial('Should return empty array when no answers are added', async t => {
 	const questions = await Questions('test2.json');
-	let question = {
+	const question = {
 		summary: 'What is moon?',
 		author: 'Jack London Third',
 	};
@@ -107,20 +107,20 @@ test.serial('Should throw an error when question object is damaged', async t => 
 test.serial('Should return array of answers', async t => {
 	const questions = await Questions('test2.json');
 	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
-	let question = {
+	const question = {
 		id,
 		author: "123",
 		summary: 'What is',
 		answers: [
 			{
-				'id': '54362748-22f9-4a9a-a942-b0fe9d848116',
-				'author': 'Brian McKenzie',
-				'summary': 'The Earth is flat.',
+				id: '54362748-22f9-4a9a-a942-b0fe9d848116',
+				author: 'Brian McKenzie',
+				summary: 'The Earth is flat.',
 			},
 			{
-				'id': '74927535-22f9-4a9a-a942-b0fe9d848116',
-				'author': 'Dr Strange',
-				'summary': 'It is egg-shaped.',
+				id: '74927535-22f9-4a9a-a942-b0fe9d848116',
+				author: 'Dr Strange',
+				summary: 'It is egg-shaped.',
 			},
 		],
 	};
@@ -134,20 +134,20 @@ test.serial('Should return single answer with specified id', async t => {
 	const questions = await Questions('test2.json');
 	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
 	const id2 = '54362748-22f9-4a9a-a942-b0fe9d848116';
-	let question = {
+	const question = {
 		id,
 		author: "123",
 		summary: 'What is',
 		answers: [
 			{
-				'id': id2,
-				'author': 'Brian McKenzie',
-				'summary': 'The Earth is flat.',
+				id: id2,
+				author: 'Brian McKenzie',
+				summary: 'The Earth is flat.',
 			},
 			{
-				'id': '74927535-22f9-4a9a-a942-b0fe9d848116',
-				'author': 'Dr Strange',
-				'summary': 'It is egg-shaped.',
+				id: '74927535-22f9-4a9a-a942-b0fe9d848116',
+				author: 'Dr Strange',
+				summary: 'It is egg-shaped.',
 			},
 		],
 	};
@@ -156,29 +156,29 @@ test.serial('Should return single answer with specified id', async t => {
 
 	t.deepEqual(await questions.getAnswer(id, id2),
 		{
-			'id': id2,
-			'author': 'Brian McKenzie',
-			'summary': 'The Earth is flat.',
+			id: id2,
+			author: 'Brian McKenzie',
+			summary: 'The Earth is flat.',
 		});
 });
 
 test.serial('Should throw error when answer with specified id does not exist', async t => {
 	const questions = await Questions('test2.json');
 	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
-	let question = {
+	const question = {
 		id,
 		author: "123",
 		summary: 'What is',
 		answers: [
 			{
-				'id': faker.datatype.uuid(),
-				'author': 'Brian McKenzie',
-				'summary': 'The Earth is flat.',
+				id: faker.datatype.uuid(),
+				author: 'Brian McKenzie',
+				summary: 'The Earth is flat.',
 			},
 			{
-				'id': faker.datatype.uuid(),
-				'author': 'Dr Strange',
-				'summary': 'It is egg-shaped.',
+				id: faker.datatype.uuid(),
+				author: 'Dr Strange',
+				summary: 'It is egg-shaped.',
 			},
 		],
 	};
@@ -186,21 +186,21 @@ test.serial('Should throw error when answer with specified id does not exist', a
 	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
 
 	await t.throwsAsync(async () => {
-		await questions.getAnswer(id, faker.datatype.uuid())
+		await questions.getAnswer(id, faker.datatype.uuid());
 	}, {instanceOf: Error, message: 'Answer with specified id does not exist'});
 });
 
 test.serial('Should throw an error when answer is not typeof object or question with specified id does not exist', async t => {
 	const questions = await Questions('test2.json');
 	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
-	let question = {
+	const question = {
 		id,
 		author: "123",
 		summary: 'What is',
 		answers: [],
 	};
 
-	let answer = []
+	let answer = [];
 	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
@@ -224,7 +224,7 @@ test.serial('Should throw an error when answer is not typeof object or question 
 test.serial('Should throw error if added answer.author is not typeof string ', async t => {
 	const questions = await Questions('test2.json');
 	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
-	let question = {
+	const question = {
 		id,
 		author: "123",
 		summary: 'What is',
@@ -268,7 +268,7 @@ test.serial('Should throw error if added answer.author is not typeof string ', a
 test.serial('Should throw error if added answer.summary is not typeof string ', async t => {
 	const questions = await Questions('test2.json');
 	const id = 'e6455abf-22f9-4a9a-a942-b0fe9d848116';
-	let question = {
+	const question = {
 		id,
 		author: "123",
 		summary: 'What is',
@@ -320,7 +320,7 @@ test.serial('Should add answer to data/test2.json', async t => {
 	};
 	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
 
-	let answer = {
+	const answer = {
 		author: 'Joe',
 		summary: 'It is good',
 	};
@@ -338,14 +338,14 @@ test.serial('Should add answer to data/test2.json', async t => {
 		summary: 'What is',
 		answers: [
 			{
-				'id': '54362748-22f9-4a9a-a942-b0fe9d848116',
-				'author': 'Brian McKenzie',
-				'summary': 'The Earth is flat.',
+				id: '54362748-22f9-4a9a-a942-b0fe9d848116',
+				author: 'Brian McKenzie',
+				summary: 'The Earth is flat.',
 			},
 			{
-				'id': '74927535-22f9-4a9a-a942-b0fe9d848116',
-				'author': 'Dr Strange',
-				'summary': 'It is egg-shaped.',
+				id: '74927535-22f9-4a9a-a942-b0fe9d848116',
+				author: 'Dr Strange',
+				summary: 'It is egg-shaped.',
 			},
 		],
 	};
