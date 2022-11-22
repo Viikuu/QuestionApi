@@ -37,3 +37,14 @@ test.serial('get /questions/:questionId/answers empty answer array', async t => 
 	const message = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers', {prefixUrl: t.context.prefixUrl}).json();
 	t.deepEqual(message, {success: true, answers: []});
 });
+
+test.serial('post /questions/:questionId/answers', async t => {
+	const answer = {
+		author: 'Dr Strange',
+		summary: 'It is egg-shaped.',
+	};
+
+	await t.notThrowsAsync(async () => {
+		await got.post('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers', {prefixUrl: t.context.prefixUrl, json: answer});
+	});
+});
