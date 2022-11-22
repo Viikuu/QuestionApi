@@ -55,7 +55,6 @@ test.serial('get /questions/:questionId', async t => {
 
 	await writeFile('data/test3.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
 
-
 	await t.notThrowsAsync(async () => {
 		const question = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116', {prefixUrl: t.context.prefixUrl}).json();
 		t.deepEqual(question, {success: true, question: testQuestions[0]});
@@ -65,5 +64,4 @@ test.serial('get /questions/:questionId', async t => {
 		const question = await got('questions/35c05570-622e-4008-a389-3694873e667a', {prefixUrl: t.context.prefixUrl}).json();
 		t.deepEqual(question, {success: true, question: testQuestions[1]});
 	});
-
 });
