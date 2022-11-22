@@ -27,10 +27,8 @@ test.serial('get /questions empty questionRepo', async t => {
 
 test.serial('post /questions', async t => {
 	const question = {
-		id: 'e6455abf-22f9-4a9a-a942-b0fe9d848116',
 		summary: 'What is my name?',
 		author: 'Jack London',
-		answers: [],
 	};
 	await t.notThrowsAsync(async () => {
 		await got.post('questions/', {prefixUrl: t.context.prefixUrl, json: question});
