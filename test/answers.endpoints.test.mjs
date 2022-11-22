@@ -6,7 +6,7 @@ import app_init from '../app.mjs';
 import {unlink, writeFile} from 'node:fs/promises';
 
 test.before(async t => {
-	const app = app_init('test3.json')
+	const app = app_init('test4.json')
 	t.context.server = http.createServer(app);
 	t.context.prefixUrl = await listen(t.context.server);
 
@@ -25,13 +25,12 @@ test.before(async t => {
 		},
 	];
 
-	await writeFile('data/test3.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
-
+	await writeFile('data/test4.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
 });
 
 test.after.always(async t => {
 	t.context.server.close();
-	await unlink('data/test3.json');
+	await unlink('data/test4.json');
 });
 
 test.serial('get /questions/:questionId/answers empty answer array', async t => {
