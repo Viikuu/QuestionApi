@@ -1,6 +1,7 @@
 import express from 'express';
 import questionStorage from './middleware/storage-middleware.mjs';
 import {questionRouter} from './routers/question-router.mjs';
+import errorHandler from './middleware/error-middleware.mjs';
 
 function app_init(STORAGE_FILE_PATH) {
 
@@ -16,6 +17,8 @@ function app_init(STORAGE_FILE_PATH) {
 	app.get('/', (_, res) => {
 		res.json({ message: 'Welcome to responder!' });
 	});
+
+	app.use(errorHandler);
 
 	return app;
 }
