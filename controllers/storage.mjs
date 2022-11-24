@@ -1,6 +1,6 @@
-import {readFile, writeFile, access, mkdir} from 'fs/promises';
+import {readFile, writeFile, access, mkdir} from 'node:fs/promises';
 
-async function Storage (fileName) {
+async function Storage(fileName) {
 	if (fileName.split('.').at(-1).trim() !== 'json') {
 		throw new Error('Specified file should be a JSON file');
 	}
@@ -11,9 +11,9 @@ async function Storage (fileName) {
 	} catch {
 		try {
 			await mkdir('data');
-		} catch (e) {
-			if (e.code !== 'EEXIST') {
-				throw e;
+		} catch (error) {
+			if (error.code !== 'EEXIST') {
+				throw error;
 			}
 		}
 
@@ -21,11 +21,11 @@ async function Storage (fileName) {
 	}
 
 	async function saveData(data) {
-		await writeFile(fileName, JSON.stringify(data, undefined, '  '), { encoding: 'utf-8' });
+		await writeFile(fileName, JSON.stringify(data, undefined, '  '), {encoding: 'utf8'});
 	}
 
 	async function getData() {
-		const fileContent = await readFile(fileName, { encoding: 'utf-8' });
+		const fileContent = await readFile(fileName, {encoding: 'utf8'});
 		return JSON.parse(fileContent);
 	}
 

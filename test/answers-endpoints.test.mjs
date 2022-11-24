@@ -1,12 +1,12 @@
-import http from 'http';
+import http from 'node:http';
+import {unlink, writeFile} from 'node:fs/promises';
 import test from 'ava';
 import got from 'got';
 import listen from 'test-listen';
-import app_init from '../app.mjs';
-import {unlink, writeFile} from 'node:fs/promises';
+import appInit from '../app.mjs';
 
 test.before(async t => {
-	const app = app_init('test4.json')
+	const app = appInit('test4.json');
 	t.context.server = http.createServer(app);
 	t.context.prefixUrl = await listen(t.context.server);
 
@@ -103,7 +103,7 @@ test.serial('get /questions/:questionId/answers/:answerId', async t => {
 
 	await t.notThrowsAsync(async () => {
 		const message = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers/f4325fw4-22f9-4a9a-a942-b0fe9d848116', {prefixUrl: t.context.prefixUrl}).json();
-		t.deepEqual(message, {success: true, answer: answer})
+		t.deepEqual(message, {success: true, answer});
 	});
 });
 
