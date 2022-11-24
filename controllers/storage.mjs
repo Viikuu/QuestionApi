@@ -1,9 +1,8 @@
 import {readFile, writeFile, access, mkdir} from 'fs/promises';
-import ValidateError from '../utils/customError.mjs';
 
 async function Storage (fileName) {
 	if (fileName.split('.').at(-1).trim() !== 'json') {
-		throw new ValidateError('Specified file should be a JSON file');
+		throw new Error('Specified file should be a JSON file');
 	}
 
 	fileName = `data/${fileName}`;

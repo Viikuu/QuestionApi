@@ -1,4 +1,4 @@
-export default class ValidateError extends Error {
+export default class ApiError extends Error {
 	constructor(...args) {
 		super(...args);
 	}
