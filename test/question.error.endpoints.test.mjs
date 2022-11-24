@@ -15,5 +15,33 @@ test.after.always(async t => {
 	t.context.server.close();
 	await unlink('data/testError.json');
 });
+test.serial('post /questions error', async t => {
+	const test = async (question, code, message) => {
+		const response = await got.post('questions/', {
+			prefixUrl: t.context.prefixUrl,
+			throwHttpErrors: false,
+			json: question,
+		});
+		t.is(response.statusCode, code);
+		t.deepEqual(JSON.parse(response.body), {success: false, message});
+	}
 
+	await test({
+		author: 'Jack London',
+	}, 400,
+		"Expected question.summary to be a string, got undefined");
+
+	await test({
+		summary: 'What is tost?',
+	}, 400,
+		"Expected question.author to be a string, got undefined");
+
+	await test({},
+		400,
+		"Expected question.author to be a string, got undefined");
+
+	await test([],
+		400,
+		'Expected question to be an object, got object');
+});
 
