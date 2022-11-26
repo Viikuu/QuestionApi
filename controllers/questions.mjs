@@ -57,8 +57,6 @@ export default async function Questions(fileName) {
 	const getAnswers = async questionId => {
 		const question = await getQuestionById(questionId);
 
-		checkQuestion(question);
-
 		return question.answers;
 	};
 
