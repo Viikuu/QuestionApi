@@ -13,7 +13,7 @@ test.before(async t => {
 	t.context.prefixUrl = await listen(t.context.server);
 });
 
-test.beforeEach(async t => {
+test.beforeEach(async () => {
 	await writeFile('data/testError2.json', JSON.stringify([
 		{
 			id: 'e6455abf-22f9-4a9a-a942-b0fe9d848116',
@@ -46,5 +46,38 @@ test.serial('get /questions/:questionId/answers error - Question with specified 
 	} catch (error) {
 		t.is(error.response.statusCode, 404);
 		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Question with specified id does not exist'});
+	}
+});
+
+test.serial('post /questions/:questionId/answers error - Question with specified id does not exist', async t => {
+	try {
+		await got.post(`questions/${faker.datatype.uuid()}/answers`, {
+			prefixUrl: t.context.prefixUrl,
+			retry: {
+				limit: 0,
+			},
+			json: {
+				author: 'Dr Strange',
+				summary: 'It is egg-shaped.',
+			}
+		});
+	} catch (error) {
+		t.is(error.response.statusCode, 404);
+		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Question with specified id does not exist'});
+	}
+});
+
+test.serial('post /questions/:questionId/answers error - Expected answer to be an object, got object ', async t => { //Array
+	try {
+		await got.post(`questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers`, {
+			prefixUrl: t.context.prefixUrl,
+			retry: {
+				limit: 0,
+			},
+			json: [],
+		});
+	} catch (error) {
+		t.is(error.response.statusCode, 400);
+		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Expected answer to be an object, got object'});
 	}
 });
