@@ -81,3 +81,64 @@ test.serial('post /questions/:questionId/answers error - Expected answer to be a
 		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Expected answer to be an object, got object'});
 	}
 });
+
+test.serial('post /questions/:questionId/answers error - Expected answer.author to be a string, got undefined ', async t => {
+	try {
+		await got.post(`questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers`, {
+			prefixUrl: t.context.prefixUrl,
+			retry: {
+				limit: 0,
+			},
+			json: {},
+		});
+	} catch (error) {
+		t.is(error.response.statusCode, 400);
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Expected answer.author to be a string, got undefined',
+			});
+	}
+});
+
+test.serial('post /questions/:questionId/answers error - Expected answer.author to be a string, got number ', async t => {
+	try {
+		await got.post(`questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers`, {
+			prefixUrl: t.context.prefixUrl,
+			retry: {
+				limit: 0,
+			},
+			json: {
+				author:123,
+			},
+		});
+	} catch (error) {
+		t.is(error.response.statusCode, 400);
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Expected answer.author to be a string, got number',
+			});
+	}
+});
+
+test.serial('post /questions/:questionId/answers error - Expected answer.author to be a string, got object ', async t => {
+	try {
+		await got.post(`questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers`, {
+			prefixUrl: t.context.prefixUrl,
+			retry: {
+				limit: 0,
+			},
+			json: {
+				author:[],
+			},
+		});
+	} catch (error) {
+		t.is(error.response.statusCode, 400);
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Expected answer.author to be a string, got object',
+			});
+	}
+});
