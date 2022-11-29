@@ -12,6 +12,11 @@ test.before(async t => {
 	t.context.prefixUrl = await listen(t.context.server);
 });
 
+test.after.always(async t => {
+	t.context.server.close();
+	await unlink('data/testError2.json');
+});
+
 test.beforeEach(async () => {
 	await writeFile('data/testError2.json', JSON.stringify([
 		{
@@ -27,11 +32,6 @@ test.beforeEach(async () => {
 			answers: [],
 		},
 	], undefined, '  '), {encoding: 'utf8'});
-});
-
-test.after.always(async t => {
-	t.context.server.close();
-	await unlink('data/testError2.json');
 });
 
 test.serial('get /questions/:questionId/answers error - Question with specified id does not exist', async t => {
@@ -62,7 +62,7 @@ test.serial('post /questions/:questionId/answers error - Question with specified
 			json: {
 				author: 'Dr Strange',
 				summary: 'It is egg-shaped.',
-			}
+			},
 		});
 	} catch (error) {
 		t.is(error.response.statusCode, 404);
@@ -74,7 +74,7 @@ test.serial('post /questions/:questionId/answers error - Question with specified
 	}
 });
 
-test.serial('post /questions/:questionId/answers error - Expected answer to be an object, got object ', async t => { //Array
+test.serial('post /questions/:questionId/answers error - Expected answer to be an object, got object ', async t => { // Array
 	try {
 		await got.post(`questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers`, {
 			prefixUrl: t.context.prefixUrl,
@@ -120,7 +120,7 @@ test.serial('post /questions/:questionId/answers error - Expected answer.author 
 				limit: 0,
 			},
 			json: {
-				author:123,
+				author: 123,
 			},
 		});
 	} catch (error) {
@@ -141,7 +141,7 @@ test.serial('post /questions/:questionId/answers error - Expected answer.author 
 				limit: 0,
 			},
 			json: {
-				author:[],
+				author: [],
 			},
 		});
 	} catch (error) {

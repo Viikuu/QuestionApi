@@ -26,25 +26,49 @@ test.serial('Should throw an error when question is not typeof object or questio
 	const questions = await Questions('test2.json');
 	await t.throwsAsync(async () => {
 		await questions.getAnswers(faker.datatype.uuid());
-	}, {instanceOf: Error, message: `Question with specified id does not exist`});
+	}, {
+		instanceOf: Error,
+		message: `Question with specified id does not exist`,
+	});
 
 	let question = [];
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers((await questions.getQuestions())[0].id);
-	}, {instanceOf: Error, message: `Question with specified id does not exist`});
+	}, {
+		instanceOf: Error,
+		message: `Question with specified id does not exist`,
+	});
 
 	question = 123;
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers((await questions.getQuestions())[0].id);
-	}, {instanceOf: Error, message: `Question with specified id does not exist`});
+	}, {
+		instanceOf: Error,
+		message: `Question with specified id does not exist`,
+	});
 
 	question = 'string';
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers((await questions.getQuestions())[0].id);
-	}, {instanceOf: Error, message: `Question with specified id does not exist`});
+	}, {
+		instanceOf: Error,
+		message: `Question with specified id does not exist`,
+	});
 });
 
 test.serial('Should throw an error when question object is damaged', async t => {
@@ -53,11 +77,18 @@ test.serial('Should throw an error when question object is damaged', async t => 
 	let question = {
 		id,
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	await t.throwsAsync(async () => {
 		await questions.getAnswers(id);
-	}, {instanceOf: Error, message: `Question object damaged!`});
+	}, {
+		instanceOf: Error,
+		message: `Question object damaged!`,
+	});
 
 	question = {
 		id,
@@ -65,10 +96,17 @@ test.serial('Should throw an error when question object is damaged', async t => 
 		summary: 'What is',
 		answers: 123,
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers(id);
-	}, {instanceOf: Error, message: `Question object damaged!`});
+	}, {
+		instanceOf: Error,
+		message: `Question object damaged!`,
+	});
 
 	question = {
 		id,
@@ -76,10 +114,17 @@ test.serial('Should throw an error when question object is damaged', async t => 
 		summary: [],
 		answers: [],
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers(id);
-	}, {instanceOf: Error, message: `Question object damaged!`});
+	}, {
+		instanceOf: Error,
+		message: `Question object damaged!`,
+	});
 
 	question = {
 		id,
@@ -87,10 +132,17 @@ test.serial('Should throw an error when question object is damaged', async t => 
 		summary: 'What is',
 		answers: [],
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers(id);
-	}, {instanceOf: Error, message: `Question object damaged!`});
+	}, {
+		instanceOf: Error,
+		message: `Question object damaged!`,
+	});
 
 	question = {
 		id,
@@ -98,10 +150,17 @@ test.serial('Should throw an error when question object is damaged', async t => 
 		summary: 421,
 		answers: [123],
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 	await t.throwsAsync(async () => {
 		await questions.getAnswers(id);
-	}, {instanceOf: Error, message: `Question object damaged!`});
+	}, {
+		instanceOf: Error,
+		message: `Question object damaged!`,
+	});
 });
 
 test.serial('Should return array of answers', async t => {
@@ -125,7 +184,11 @@ test.serial('Should return array of answers', async t => {
 		],
 	};
 
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	t.deepEqual(await questions.getAnswers(id), question.answers);
 });
@@ -152,7 +215,11 @@ test.serial('Should return single answer with specified id', async t => {
 		],
 	};
 
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	t.deepEqual(await questions.getAnswer(id, id2),
 		{
@@ -183,11 +250,18 @@ test.serial('Should throw error when answer with specified id does not exist', a
 		],
 	};
 
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	await t.throwsAsync(async () => {
 		await questions.getAnswer(id, faker.datatype.uuid());
-	}, {instanceOf: Error, message: 'Answer with specified id does not exist'});
+	}, {
+		instanceOf: Error,
+		message: 'Answer with specified id does not exist',
+	});
 });
 
 test.serial('Should throw an error when answer is not typeof object or question with specified id does not exist', async t => {
@@ -201,24 +275,40 @@ test.serial('Should throw an error when answer is not typeof object or question 
 	};
 
 	let answer = [];
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer to be an object, got ${typeof answer}`,
+	});
 
 	answer = 123;
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer to be an object, got ${typeof answer}`,
+	});
 
 	answer = "string";
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer to be an object, got ${typeof answer}`,
+	});
 
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer to be an object, got ${typeof answer}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer to be an object, got ${typeof answer}`,
+	});
 });
 
 test.serial('Should throw error if added answer.author is not typeof string ', async t => {
@@ -230,7 +320,11 @@ test.serial('Should throw error if added answer.author is not typeof string ', a
 		summary: 'What is',
 		answers: [],
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	let answer = {
 		author: 123,
@@ -239,7 +333,10 @@ test.serial('Should throw error if added answer.author is not typeof string ', a
 
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer.author to be a string, got ${typeof answer.author}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer.author to be a string, got ${typeof answer.author}`,
+	});
 
 	answer = {
 		author: [],
@@ -247,14 +344,20 @@ test.serial('Should throw error if added answer.author is not typeof string ', a
 	};
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer.author to be a string, got ${typeof answer.author}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer.author to be a string, got ${typeof answer.author}`,
+	});
 
 	answer = {
 		summary: 'What is',
 	};
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer.author to be a string, got ${typeof answer.author}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer.author to be a string, got ${typeof answer.author}`,
+	});
 
 	answer = {
 		author: false,
@@ -262,7 +365,10 @@ test.serial('Should throw error if added answer.author is not typeof string ', a
 	};
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer.author to be a string, got ${typeof answer.author}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer.author to be a string, got ${typeof answer.author}`,
+	});
 });
 
 test.serial('Should throw error if added answer.summary is not typeof string ', async t => {
@@ -274,7 +380,11 @@ test.serial('Should throw error if added answer.summary is not typeof string ', 
 		summary: 'What is',
 		answers: [],
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	let answer = {
 		author: 'Joe',
@@ -282,15 +392,23 @@ test.serial('Should throw error if added answer.summary is not typeof string ', 
 
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer.summary to be a string, got ${typeof answer.summary}`,
+	});
 
 	answer = {
 		author: 'Joe',
-		summary: {summary: 'What is'},
+		summary: {
+			summary: 'What is',
+		},
 	};
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer.summary to be a string, got ${typeof answer.summary}`,
+	});
 
 	answer = {
 		author: 'Joe',
@@ -298,7 +416,10 @@ test.serial('Should throw error if added answer.summary is not typeof string ', 
 	};
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer.summary to be a string, got ${typeof answer.summary}`,
+	});
 
 	answer = {
 		author: 'Joe',
@@ -306,7 +427,10 @@ test.serial('Should throw error if added answer.summary is not typeof string ', 
 	};
 	await t.throwsAsync(async () => {
 		await questions.addAnswer(id, answer);
-	}, {instanceOf: Error, message: `Expected answer.summary to be a string, got ${typeof answer.summary}`});
+	}, {
+		instanceOf: Error,
+		message: `Expected answer.summary to be a string, got ${typeof answer.summary}`,
+	});
 });
 
 test.serial('Should add answer to data/test2.json', async t => {
@@ -318,7 +442,11 @@ test.serial('Should add answer to data/test2.json', async t => {
 		summary: 'What is',
 		answers: [],
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	const answer = {
 		author: 'Joe',
@@ -349,7 +477,11 @@ test.serial('Should add answer to data/test2.json', async t => {
 			},
 		],
 	};
-	await writeFile('data/test2.json', JSON.stringify([question], undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test2.json',
+		JSON.stringify([question], undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	await t.notThrowsAsync(async () => {
 		await questions.addAnswer(id, answer);

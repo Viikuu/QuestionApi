@@ -6,7 +6,10 @@ import Storage from '../controllers/storage.mjs';
 test('Should throw error if fileName is not a json file name', async t => {
 	await t.throwsAsync(async () => {
 		await Storage('123');
-	}, {instanceOf: Error, message: 'Specified file should be a JSON file'});
+	}, {
+		instanceOf: Error,
+		message: 'Specified file should be a JSON file',
+	});
 });
 
 test('Should create data/filename if data/filename does not exist', async t => {

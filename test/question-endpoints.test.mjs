@@ -17,13 +17,22 @@ test.after.always(async t => {
 });
 
 test.serial('get /', async t => {
-	const message = await got('', {prefixUrl: t.context.prefixUrl}).json();
-	t.deepEqual(message, {message: 'Welcome to responder!'});
+	const message = await got('', {
+		prefixUrl: t.context.prefixUrl,
+	}).json();
+	t.deepEqual(message, {
+		message: 'Welcome to responder!',
+	});
 });
 
 test.serial('get /questions empty questionRepo', async t => {
-	const message = await got('questions/', {prefixUrl: t.context.prefixUrl}).json();
-	t.deepEqual(message, {success: true, questions: []});
+	const message = await got('questions/', {
+		prefixUrl: t.context.prefixUrl,
+	}).json();
+	t.deepEqual(message, {
+		success: true,
+		questions: [],
+	});
 });
 
 test.serial('post /questions', async t => {
@@ -32,7 +41,10 @@ test.serial('post /questions', async t => {
 		author: 'Jack London',
 	};
 	await t.notThrowsAsync(async () => {
-		await got.post('questions/', {prefixUrl: t.context.prefixUrl, json: question});
+		await got.post('questions/', {
+			prefixUrl: t.context.prefixUrl,
+			json: question,
+		});
 	});
 });
 
@@ -52,15 +64,29 @@ test.serial('get /questions/:questionId', async t => {
 		},
 	];
 
-	await writeFile('data/test3.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test3.json',
+		JSON.stringify(testQuestions, undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	await t.notThrowsAsync(async () => {
-		const question = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116', {prefixUrl: t.context.prefixUrl}).json();
-		t.deepEqual(question, {success: true, question: testQuestions[0]});
+		const question = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116', {
+			prefixUrl: t.context.prefixUrl,
+		}).json();
+		t.deepEqual(question, {
+			success: true,
+			question: testQuestions[0],
+		});
 	});
 
 	await t.notThrowsAsync(async () => {
-		const question = await got('questions/35c05570-622e-4008-a389-3694873e667a', {prefixUrl: t.context.prefixUrl}).json();
-		t.deepEqual(question, {success: true, question: testQuestions[1]});
+		const question = await got('questions/35c05570-622e-4008-a389-3694873e667a', {
+			prefixUrl: t.context.prefixUrl,
+		}).json();
+		t.deepEqual(question, {
+			success: true,
+			question: testQuestions[1],
+		});
 	});
 });

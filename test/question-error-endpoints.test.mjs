@@ -41,7 +41,11 @@ test.serial('post /questions error - Expected question.author to be a string, go
 		},
 	});
 	t.is(response.statusCode, 400);
-	t.deepEqual(JSON.parse(response.body), {success: false, message: 'Expected question.author to be a string, got undefined'});
+	t.deepEqual(JSON.parse(response.body),
+		{
+			success: false,
+			message: 'Expected question.author to be a string, got undefined',
+		});
 
 	const response1 = await got.post('questions/', {
 		prefixUrl: t.context.prefixUrl,
@@ -49,7 +53,11 @@ test.serial('post /questions error - Expected question.author to be a string, go
 		json: {},
 	});
 	t.is(response1.statusCode, 400);
-	t.deepEqual(JSON.parse(response1.body), {success: false, message: 'Expected question.author to be a string, got undefined'});
+	t.deepEqual(JSON.parse(response1.body),
+		{
+			success: false,
+			message: 'Expected question.author to be a string, got undefined',
+		});
 });
 
 test.serial('post /questions error - Expected question to be an object, got object', async t => {
@@ -59,7 +67,11 @@ test.serial('post /questions error - Expected question to be an object, got obje
 		json: [],
 	});
 	t.is(response.statusCode, 400);
-	t.deepEqual(JSON.parse(response.body), {success: false, message: 'Expected question to be an object, got object'});
+	t.deepEqual(JSON.parse(response.body),
+		{
+			success: false,
+			message: 'Expected question to be an object, got object',
+		});
 });
 
 test.serial('get /questions/:questionId error - Question with specified id does not exist - empty file', async t => {
@@ -72,7 +84,11 @@ test.serial('get /questions/:questionId error - Question with specified id does 
 		});
 	} catch (error) {
 		t.is(error.response.statusCode, 404);
-		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Question with specified id does not exist'});
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Question with specified id does not exist',
+			});
 	}
 });
 
@@ -90,7 +106,10 @@ test.serial('get /questions/:questionId error - Question with specified id does 
 			author: 'Tim Doods',
 			answers: [],
 		},
-	], undefined, '  '), {encoding: 'utf8'});
+	], undefined, '  '),
+	{
+		encoding: 'utf8',
+	});
 
 	try {
 		await got(`questions/${faker.datatype.uuid()}`, {
@@ -101,7 +120,11 @@ test.serial('get /questions/:questionId error - Question with specified id does 
 		});
 	} catch (error) {
 		t.is(error.response.statusCode, 404);
-		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Question with specified id does not exist'});
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Question with specified id does not exist',
+			});
 	}
 });
 
@@ -112,7 +135,10 @@ test.serial('get /questions/:questionId error - Question object damaged!', async
 		{
 			id,
 		},
-	], undefined, '  '), {encoding: 'utf8'});
+	], undefined, '  '),
+	{
+		encoding: 'utf8',
+	});
 
 	try {
 		await got(`questions/${id}`, {
@@ -123,6 +149,10 @@ test.serial('get /questions/:questionId error - Question object damaged!', async
 		});
 	} catch (error) {
 		t.is(error.response.statusCode, 500);
-		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Question object damaged!'});
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Question object damaged!',
+			});
 	}
 });

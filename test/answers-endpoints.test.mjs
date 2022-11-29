@@ -25,7 +25,11 @@ test.before(async t => {
 		},
 	];
 
-	await writeFile('data/test4.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test4.json',
+		JSON.stringify(testQuestions, undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 });
 
 test.after.always(async t => {
@@ -34,8 +38,15 @@ test.after.always(async t => {
 });
 
 test.serial('get /questions/:questionId/answers empty answer array', async t => {
-	const message = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers', {prefixUrl: t.context.prefixUrl}).json();
-	t.deepEqual(message, {success: true, answers: []});
+	const message = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers',
+		{
+			prefixUrl: t.context.prefixUrl,
+		}).json();
+	t.deepEqual(message,
+		{
+			success: true,
+			answers: [],
+		});
 });
 
 test.serial('get /questions/:questionId/answers', async t => {
@@ -60,10 +71,18 @@ test.serial('get /questions/:questionId/answers', async t => {
 		},
 	];
 
-	await writeFile('data/test4.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test4.json',
+		JSON.stringify(testQuestions, undefined, '  '),
+		{encoding: 'utf8'});
 
-	const message = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers', {prefixUrl: t.context.prefixUrl}).json();
-	t.deepEqual(message, {success: true, answers: [answer]});
+	const message = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers',
+		{
+			prefixUrl: t.context.prefixUrl,
+		}).json();
+	t.deepEqual(message, {
+		success: true,
+		answers: [answer],
+	});
 });
 
 test.serial('post /questions/:questionId/answers', async t => {
@@ -73,7 +92,11 @@ test.serial('post /questions/:questionId/answers', async t => {
 	};
 
 	await t.notThrowsAsync(async () => {
-		await got.post('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers', {prefixUrl: t.context.prefixUrl, json: answer});
+		await got.post('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers',
+			{
+				prefixUrl: t.context.prefixUrl,
+				json: answer,
+			});
 	});
 });
 
@@ -99,11 +122,22 @@ test.serial('get /questions/:questionId/answers/:answerId', async t => {
 		},
 	];
 
-	await writeFile('data/test4.json', JSON.stringify(testQuestions, undefined, '  '), {encoding: 'utf8'});
+	await writeFile('data/test4.json',
+		JSON.stringify(testQuestions, undefined, '  '),
+		{
+			encoding: 'utf8',
+		});
 
 	await t.notThrowsAsync(async () => {
-		const message = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers/f4325fw4-22f9-4a9a-a942-b0fe9d848116', {prefixUrl: t.context.prefixUrl}).json();
-		t.deepEqual(message, {success: true, answer});
+		const message = await got('questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers/f4325fw4-22f9-4a9a-a942-b0fe9d848116',
+			{
+				prefixUrl: t.context.prefixUrl,
+			}).json();
+		t.deepEqual(message,
+			{
+				success: true,
+				answer,
+			});
 	});
 });
 
