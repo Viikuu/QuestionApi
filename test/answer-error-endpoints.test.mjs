@@ -34,3 +34,17 @@ test.after.always(async t => {
 	t.context.server.close();
 	await unlink('data/testError2.json');
 });
+
+test.serial('get /questions/:questionId/answers error - Question with specified id does not exist', async t => {
+	try {
+		await got(`questions/${faker.datatype.uuid()}/answers`, {
+			prefixUrl: t.context.prefixUrl,
+			retry: {
+				limit: 0,
+			},
+		});
+	} catch (error) {
+		t.is(error.response.statusCode, 404);
+		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Question with specified id does not exist'});
+	}
+});
