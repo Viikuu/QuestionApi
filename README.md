@@ -48,7 +48,8 @@ Project implementing API for creating questions and answers for them.
 - [x] Create answer controller
 - [x] Write unit tests for contollers
 - [x] Create endpoints
-- [ ] Write tests for endpoints
+- [x] Write tests for question endpoints
+- [ ] Write tests for amswer endpoints
 - [ ] Rewrite controllers to save in db
 - [ ] More ...
 
