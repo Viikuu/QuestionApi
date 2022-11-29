@@ -6,7 +6,6 @@ import {faker} from '@faker-js/faker';
 import listen from 'test-listen';
 import appInit from '../app.mjs';
 
-
 test.before(async t => {
 	const app = appInit('testError2.json');
 	t.context.server = http.createServer(app);
@@ -45,7 +44,11 @@ test.serial('get /questions/:questionId/answers error - Question with specified 
 		});
 	} catch (error) {
 		t.is(error.response.statusCode, 404);
-		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Question with specified id does not exist'});
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Question with specified id does not exist',
+			});
 	}
 });
 
@@ -63,7 +66,11 @@ test.serial('post /questions/:questionId/answers error - Question with specified
 		});
 	} catch (error) {
 		t.is(error.response.statusCode, 404);
-		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Question with specified id does not exist'});
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Question with specified id does not exist',
+			});
 	}
 });
 
@@ -78,7 +85,11 @@ test.serial('post /questions/:questionId/answers error - Expected answer to be a
 		});
 	} catch (error) {
 		t.is(error.response.statusCode, 400);
-		t.deepEqual(JSON.parse(error.response.body), {success: false, message: 'Expected answer to be an object, got object'});
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Expected answer to be an object, got object',
+			});
 	}
 });
 
@@ -208,3 +219,38 @@ test.serial('post /questions/:questionId/answers error - Expected answer.summary
 	}
 });
 
+test.serial('get /questions/:questionId/answers/:answerId error - Question with specified id does not exist', async t => {
+	try {
+		await got(`questions/${faker.datatype.uuid()}/answers/${faker.datatype.uuid()}`, {
+			prefixUrl: t.context.prefixUrl,
+			retry: {
+				limit: 0,
+			},
+		});
+	} catch (error) {
+		t.is(error.response.statusCode, 404);
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Question with specified id does not exist',
+			});
+	}
+});
+
+test.serial('get /questions/:questionId/answers/:answerId error - Answer with specified id does not exist', async t => {
+	try {
+		await got(`questions/e6455abf-22f9-4a9a-a942-b0fe9d848116/answers/${faker.datatype.uuid()}`, {
+			prefixUrl: t.context.prefixUrl,
+			retry: {
+				limit: 0,
+			},
+		});
+	} catch (error) {
+		t.is(error.response.statusCode, 404);
+		t.deepEqual(JSON.parse(error.response.body),
+			{
+				success: false,
+				message: 'Answer with specified id does not exist',
+			});
+	}
+});
