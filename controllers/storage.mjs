@@ -1,32 +1,22 @@
-import {readFile, writeFile, access, mkdir} from 'node:fs/promises';
+const {MongoClient} = require('mongodb');
+import ApiError from '../utils/custom-error.mjs';
 
-async function Storage(fileName) {
-	if (fileName.split('.').at(-1).trim() !== 'json') {
-		throw new Error('Specified file should be a JSON file');
-	}
+async function Storage() {
+	const url = process.env.DB_URL;
 
-	fileName = `data/${fileName}`;
+	const client = new MongoClient(url);
 	try {
-		await access(fileName);
-	} catch {
-		try {
-			await mkdir('data');
-		} catch (error) {
-			if (error.code !== 'EEXIST') {
-				throw error;
-			}
-		}
-
-		await saveData([]);
+		await client.connect();
+	} catch (error) {
+		throw new ApiError("DataBase problem ...");
 	}
 
 	async function saveData(data) {
-		await writeFile(fileName, JSON.stringify(data, undefined, '  '), {encoding: 'utf8'});
+
 	}
 
 	async function getData() {
-		const fileContent = await readFile(fileName, {encoding: 'utf8'});
-		return JSON.parse(fileContent);
+
 	}
 
 	return {
