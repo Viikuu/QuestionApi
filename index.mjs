@@ -1,4 +1,7 @@
+import dotenv from 'dotenv';
 import appInit from './app.mjs';
+
+dotenv.config();
 
 const STORAGE_FILE_PATH = 'questions.json';
 
